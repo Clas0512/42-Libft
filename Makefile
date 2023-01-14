@@ -18,23 +18,27 @@ BONUS_OBJS	= $(BONUS:.c=.o)
 
 CC	=	gcc
 RM	=	rm -f
-FLAGS	= -Wall -Wextra -Werror
-
-$(NAME):$(OBJS)
-		$(CC) $(FLAGS) -c $(SRCS)
-		ar rc $(NAME) $(OBJS)
+CFLAGS	= -Wall -Wextra -Werror
 
 all: $(NAME)
 
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME):$(OBJS)
+	@$(CC) -c $(SRCS)
+	@ar rc $(NAME) $(OBJS)
+	
+
 bonus:
-		$(CC) $(FLAGS) -c $(BONUS)
-		ar rc $(NAME) $(BONUS_OBJS)
+	@$(CC) $(FLAGS) -c $(BONUS)
+	@ar rc $(NAME) $(BONUS_OBJS)
 
 clean:
-		$(RM) $(OBJS) $(BONUS_OBJS)
+	@$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-		$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 
